@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="luogu P2091 题解 蒟蒻看不懂其他的题解，决定写一篇造福其他的蒟蒻 提前声明：本题解仅仅起引导思路的作用，并没有严格数学证明，并且个人认为思路远远比证明更重要。 原题链接 [P2091 排序](P2091 排序 - 洛谷 | 计算机科学教育新生态 (luogu.com.cn)) 题目大意：有 $n$ 个物品，每一个物品有一个体积 $V$ 和一个质量 $M$，在以物品体积为基础排序的时候，每次交换两个物品并且代价为两物品质量之和。求排好序之后的最小代价。 当我们看见这个交换的时候，应该意识到这有一定的规律。n和m的范围表示很赞。 我们首先想一个一个地将物品放回应该在的位置。将 $V$ 最小的物品放回第一个位置，明显我们有这样一些选择： 利用最小值，将它运送回去。 硬搬。 对于情况一，我们还可以进一步细化：利用全局的最小值，在与区间内的最小值交换，再借助它搬运需要搬运的物品。 接下来找找规律就好了：不难发现硬搬处理区间就是回家路径上数的和加上这个数乘以交换次数，全局最小值帮忙是全局最小值乘以区间长度加一再加上区间和与区间最小值，具体阐述如图。 总计: $cost=\\min(S+(cnt-2) \\times val[now],S+(cnt+1) \\times m+M)$ 好的，最后注意离散化一下就可以 AC 了！ 既然是面向蒟蒻，那肯定讲全啊。 这里简述一下离散化：由于体积的大小范围题目没有给出，因此最稳妥的方式就是离散化。 在只需表示相对大小的时候并且需要以值作为下标的时候，可以用它来压缩数组空间。 具体实现：使用一个相对大小来替代原本大小，例如： 如果按照第一行的方式反向存储，那肯定会爆炸，不过根据相对大小就没这些问题，如第二行。 因此我们可以根据排序之后的相对大小来决定它的值是多少，如果遇到相同的值，不要犹豫，直接干掉。 这里利用 STL 库可以很方便地实现，讲解一下这三个函数： s.erase(start,end) 删除 start 至 end 的元素 ； unique(start,end) 将 start 至 end 的元素中重复的移动至整个数组后面，并返回移动后的首地址； lower_bound(start,end,val) 在 start 至 end 二分查找大于等于 val 的位置，返回地址。 因此，只需短短几行即可： sort(v.begin(),v.end()); v.erase(unique(v.begin(),v.end()),v.end()); for(int i=1;i&lt;=n;i++) pos[i]=lower_bound(v.">
+<title></title>
+
+<link rel='canonical' href='http://8.137.89.82/p2091/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="">
+<meta property='og:description' content="luogu P2091 题解 蒟蒻看不懂其他的题解，决定写一篇造福其他的蒟蒻 提前声明：本题解仅仅起引导思路的作用，并没有严格数学证明，并且个人认为思路远远比证明更重要。 原题链接 [P2091 排序](P2091 排序 - 洛谷 | 计算机科学教育新生态 (luogu.com.cn)) 题目大意：有 $n$ 个物品，每一个物品有一个体积 $V$ 和一个质量 $M$，在以物品体积为基础排序的时候，每次交换两个物品并且代价为两物品质量之和。求排好序之后的最小代价。 当我们看见这个交换的时候，应该意识到这有一定的规律。n和m的范围表示很赞。 我们首先想一个一个地将物品放回应该在的位置。将 $V$ 最小的物品放回第一个位置，明显我们有这样一些选择： 利用最小值，将它运送回去。 硬搬。 对于情况一，我们还可以进一步细化：利用全局的最小值，在与区间内的最小值交换，再借助它搬运需要搬运的物品。 接下来找找规律就好了：不难发现硬搬处理区间就是回家路径上数的和加上这个数乘以交换次数，全局最小值帮忙是全局最小值乘以区间长度加一再加上区间和与区间最小值，具体阐述如图。 总计: $cost=\\min(S+(cnt-2) \\times val[now],S+(cnt+1) \\times m+M)$ 好的，最后注意离散化一下就可以 AC 了！ 既然是面向蒟蒻，那肯定讲全啊。 这里简述一下离散化：由于体积的大小范围题目没有给出，因此最稳妥的方式就是离散化。 在只需表示相对大小的时候并且需要以值作为下标的时候，可以用它来压缩数组空间。 具体实现：使用一个相对大小来替代原本大小，例如： 如果按照第一行的方式反向存储，那肯定会爆炸，不过根据相对大小就没这些问题，如第二行。 因此我们可以根据排序之后的相对大小来决定它的值是多少，如果遇到相同的值，不要犹豫，直接干掉。 这里利用 STL 库可以很方便地实现，讲解一下这三个函数： s.erase(start,end) 删除 start 至 end 的元素 ； unique(start,end) 将 start 至 end 的元素中重复的移动至整个数组后面，并返回移动后的首地址； lower_bound(start,end,val) 在 start 至 end 二分查找大于等于 val 的位置，返回地址。 因此，只需短短几行即可： sort(v.begin(),v.end()); v.erase(unique(v.begin(),v.end()),v.end()); for(int i=1;i&lt;=n;i++) pos[i]=lower_bound(v.">
+<meta property='og:url' content='http://8.137.89.82/p2091/'>
+<meta property='og:site_name' content='My New Hugo Site'>
+<meta property='og:type' content='article'><meta property='article:section' content='' />
+<meta name="twitter:title" content="">
+<meta name="twitter:description" content="luogu P2091 题解 蒟蒻看不懂其他的题解，决定写一篇造福其他的蒟蒻 提前声明：本题解仅仅起引导思路的作用，并没有严格数学证明，并且个人认为思路远远比证明更重要。 原题链接 [P2091 排序](P2091 排序 - 洛谷 | 计算机科学教育新生态 (luogu.com.cn)) 题目大意：有 $n$ 个物品，每一个物品有一个体积 $V$ 和一个质量 $M$，在以物品体积为基础排序的时候，每次交换两个物品并且代价为两物品质量之和。求排好序之后的最小代价。 当我们看见这个交换的时候，应该意识到这有一定的规律。n和m的范围表示很赞。 我们首先想一个一个地将物品放回应该在的位置。将 $V$ 最小的物品放回第一个位置，明显我们有这样一些选择： 利用最小值，将它运送回去。 硬搬。 对于情况一，我们还可以进一步细化：利用全局的最小值，在与区间内的最小值交换，再借助它搬运需要搬运的物品。 接下来找找规律就好了：不难发现硬搬处理区间就是回家路径上数的和加上这个数乘以交换次数，全局最小值帮忙是全局最小值乘以区间长度加一再加上区间和与区间最小值，具体阐述如图。 总计: $cost=\\min(S+(cnt-2) \\times val[now],S+(cnt+1) \\times m+M)$ 好的，最后注意离散化一下就可以 AC 了！ 既然是面向蒟蒻，那肯定讲全啊。 这里简述一下离散化：由于体积的大小范围题目没有给出，因此最稳妥的方式就是离散化。 在只需表示相对大小的时候并且需要以值作为下标的时候，可以用它来压缩数组空间。 具体实现：使用一个相对大小来替代原本大小，例如： 如果按照第一行的方式反向存储，那肯定会爆炸，不过根据相对大小就没这些问题，如第二行。 因此我们可以根据排序之后的相对大小来决定它的值是多少，如果遇到相同的值，不要犹豫，直接干掉。 这里利用 STL 库可以很方便地实现，讲解一下这三个函数： s.erase(start,end) 删除 start 至 end 的元素 ； unique(start,end) 将 start 至 end 的元素中重复的移动至整个数组后面，并返回移动后的首地址； lower_bound(start,end,val) 在 start 至 end 二分查找大于等于 val 的位置，返回地址。 因此，只需短短几行即可： sort(v.begin(),v.end()); v.erase(unique(v.begin(),v.end()),v.end()); for(int i=1;i&lt;=n;i++) pos[i]=lower_bound(v.">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_huda2458f72ce188392d75c5d51cd8e24e_373_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">My New Hugo Site</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p2091/"></a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    1 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="luogu-p2091-题解">luogu P2091 题解
+</h1><p><del>蒟蒻看不懂其他的题解，决定写一篇造福其他的蒟蒻</del></p>
+<p>提前声明：<strong>本题解仅仅起引导思路的作用，并没有严格数学证明</strong>，并且个人认为思路远远比证明更重要。</p>
+<p>原题链接 [P2091 排序](<a class="link" href="https://www.luogu.com.cn/problem/P2091"  target="_blank" rel="noopener"
+    >P2091 排序 - 洛谷 | 计算机科学教育新生态 (luogu.com.cn)</a>)</p>
+<p>题目大意：有 $n$ 个物品，每一个物品有一个体积 $V$ 和一个质量 $M$，在以物品体积为基础排序的时候，每次交换两个物品并且代价为两物品质量之和。求排好序之后的最小代价。</p>
+<p>当我们看见这个交换的时候，应该意识到这有一定的规律。<del>n和m的范围表示很赞</del>。</p>
+<p>我们首先想一个一个地将物品放回应该在的位置。将 $V$ 最小的物品放回第一个位置，明显我们有这样一些选择：</p>
+<ol>
+<li>利用最小值，将它运送回去。</li>
+<li>硬搬。</li>
+</ol>
+<p>对于情况一，我们还可以进一步细化：利用全局的最小值，在与区间内的最小值交换，再借助它搬运需要搬运的物品。</p>
+<p><img src="https://cdn.luogu.com.cn/upload/image_hosting/anm29yyl.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="here"
+	
+	
+></p>
+<p>接下来找找规律就好了：不难发现<strong>硬搬处理区间就是回家路径上数的和加上这个数乘以交换次数，全局最小值帮忙是全局最小值乘以区间长度加一再加上区间和与区间最小值</strong>，具体阐述如图。</p>
+<p>总计: $cost=\min(S+(cnt-2) \times val[now],S+(cnt+1) \times m+M)$</p>
+<p>好的，最后注意离散化一下就可以 AC 了！</p>
+<p><del>既然是面向蒟蒻，那肯定讲全啊。</del></p>
+<p>这里简述一下离散化：由于体积的大小范围题目没有给出，因此最稳妥的方式就是离散化。</p>
+<p><strong>在只需表示相对大小的时候并且需要以值作为下标的时候</strong>，可以用它来压缩数组空间。</p>
+<p>具体实现：使用一个相对大小来替代原本大小，例如：</p>
+<p><img src="https://cdn.luogu.com.cn/upload/image_hosting/4df2i6fa.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="here"
+	
+	
+></p>
+<p>如果按照第一行的方式反向存储，那肯定会爆炸，不过根据相对大小就没这些问题，如第二行。</p>
+<p>因此我们可以根据排序之后的相对大小来决定它的值是多少，如果遇到相同的值，不要犹豫，直接干掉。</p>
+<p>这里利用 STL 库可以很方便地实现，讲解一下这三个函数：</p>
+<ul>
+<li><code>s.erase(start,end)</code> 删除 start 至 end 的元素 ；</li>
+<li><code>unique(start,end)</code> 将 start 至 end 的元素中重复的移动至整个数组后面，并返回移动后的首地址；</li>
+<li><code>lower_bound(start,end,val)</code>  在 start 至 end 二分查找大于等于 val 的位置，返回地址。</li>
+</ul>
+<p>因此，只需短短几行即可：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>sort(v.begin(),v.end());
+</span></span><span style="display:flex;"><span>v.erase(unique(v.begin(),v.end()),v.end());
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&lt;=</span>n;i<span style="color:#f92672">++</span>)
+</span></span><span style="display:flex;"><span>    pos[i]<span style="color:#f92672">=</span>lower_bound(v.begin(),v.end(),pos[i])<span style="color:#f92672">-</span>v.begin()<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#75715e">//为了返回的是值，减去数组首地址；+1是为了从1开始编号。
+</span></span></span></code></pre></div><p>贴一下自己的 code :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include&lt;iostream&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include&lt;algorithm&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include&lt;vector&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> N<span style="color:#f92672">=</span><span style="color:#ae81ff">1e7</span><span style="color:#f92672">+</span><span style="color:#ae81ff">10</span>;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define int long long
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">bool</span> vis[N];
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> pos[N],val[N],id[N];
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> n,minn<span style="color:#f92672">=</span><span style="color:#ae81ff">0x7f7f7f7f7f7f7f7f</span>,ans;
+</span></span><span style="display:flex;"><span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span>v;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">signed</span> <span style="color:#a6e22e">main</span>(){
+</span></span><span style="display:flex;"><span> cin<span style="color:#f92672">&gt;&gt;</span>n;
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&lt;=</span>n;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>  cin<span style="color:#f92672">&gt;&gt;</span>pos[i];
+</span></span><span style="display:flex;"><span>  v.push_back(pos[i]);
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span> sort(v.begin(),v.end());
+</span></span><span style="display:flex;"><span>    v.erase(unique(v.begin(),v.end()),v.end());
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&lt;=</span>n;i<span style="color:#f92672">++</span>)
+</span></span><span style="display:flex;"><span>  pos[i]<span style="color:#f92672">=</span>lower_bound(v.begin(),v.end(),pos[i])<span style="color:#f92672">-</span>v.begin()<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>,id[pos[i]]<span style="color:#f92672">=</span>i;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&lt;=</span>n;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        cin<span style="color:#f92672">&gt;&gt;</span>val[i];
+</span></span><span style="display:flex;"><span>        minn<span style="color:#f92672">=</span>min(val[i],minn);
+</span></span><span style="display:flex;"><span>    }<span style="color:#75715e">//离散化基本操作
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;i<span style="color:#f92672">&lt;=</span>n;i<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> cnt,sum,minx;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>vis[pos[i]]){<span style="color:#75715e">//它没有被放在正确的位置上
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">int</span> t<span style="color:#f92672">=</span>i;<span style="color:#75715e">//cnt代表区间长度，sum代表区间和，minx代表区间最小值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            cnt<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,sum<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,minx<span style="color:#f92672">=</span><span style="color:#ae81ff">0x7f7f7f7f7f7f7f7f</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span>(<span style="color:#f92672">!</span>vis[pos[t]]){
+</span></span><span style="display:flex;"><span>                vis[pos[t]]<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>                sum<span style="color:#f92672">+=</span>val[t];cnt<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>                minx<span style="color:#f92672">=</span>min(minx,val[t]);
+</span></span><span style="display:flex;"><span>                t<span style="color:#f92672">=</span>id[t];
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            ans<span style="color:#f92672">+=</span>min(minx<span style="color:#f92672">*</span>(cnt<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">+</span>sum,minn<span style="color:#f92672">*</span>(cnt<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">+</span>sum<span style="color:#f92672">+</span>minx);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    cout<span style="color:#f92672">&lt;&lt;</span>ans<span style="color:#f92672">&lt;&lt;</span>endl;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>希望这篇题解能帮到你！</strong></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 My New Hugo Site
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

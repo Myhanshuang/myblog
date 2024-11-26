@@ -7,10 +7,10 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language><atom:link href="http://8.137.89.82/index.xml" rel="self" type="application/rss+xml" /><item>
         <title></title>
-        <link>http://8.137.89.82/history/p2091/</link>
+        <link>http://8.137.89.82/p2091/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://8.137.89.82/history/p2091/</guid>
+        <guid>http://8.137.89.82/p2091/</guid>
         <description>&lt;h1 id=&#34;luogu-p2091-题解&#34;&gt;luogu P2091 题解
 &lt;/h1&gt;&lt;p&gt;&lt;del&gt;蒟蒻看不懂其他的题解，决定写一篇造福其他的蒟蒻&lt;/del&gt;&lt;/p&gt;
 &lt;p&gt;提前声明：&lt;strong&gt;本题解仅仅起引导思路的作用，并没有严格数学证明&lt;/strong&gt;，并且个人认为思路远远比证明更重要。&lt;/p&gt;
