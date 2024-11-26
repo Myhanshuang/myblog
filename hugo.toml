@@ -1,0 +1,4 @@
+baseURL = 'http://8.137.89.82/'
+languageCode = 'zh-cn'
+title = 'My New Hugo Site'
+theme = 'stack'
